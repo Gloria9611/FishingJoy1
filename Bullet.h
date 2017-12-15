@@ -18,5 +18,5 @@ public:
 protected:
 	float getSpeed(int type);
 	CCSprite* _bulletSprite;
-	CCPoint getCollisionPoint();
+	
 };

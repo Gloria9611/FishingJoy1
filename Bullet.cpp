@@ -90,7 +90,7 @@ void Bullet::flyTo(CCPoint targetInWorldSpace, int type/* =0 */)
 	runAction(sequence);
 }
 
-CCPoint Bullet::getCollisionPoint(){
-return getParent()->convertToWorldSpace(getPosition());
-
+CCPoint Bullet::getCollosionPoint()
+{
+	return getParent()->convertToWorldSpace(getPosition());
 }
