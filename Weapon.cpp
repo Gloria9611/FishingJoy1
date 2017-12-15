@@ -46,6 +46,12 @@ bool Weapon::init(CannonType type)
 			addChild(fishNet);
 			fishNet->setVisible(false);
 			bullet->setUserObject(fishNet);
+
+			CCParticleSystemQuad* particle = CCParticleSystemQuad::create("yuwanglizi.plist");
+			particle->stopSystem();
+			addChild(particle);
+			_particils->addObject(particle);
+			fishNet->setUserObject(particle);
 		}
 		return true;
 	}while(0);
@@ -108,4 +114,18 @@ Bullet* Weapon::getBulletToShoot()
 		}
 	}
 	return NULL;
+}
+
+/*void Weapon::end(Bullet *bullet){
+	FishNet* fishNet = (FishNet*)getUserObject();
+	fishNet->showAt(getPosition(), getTag());
+
+}*/
+CCRect Weapon::getCollisionArea(Bullet *bullet){
+		FishNet* _fishNets = (FishNet*)bullet->getUserObject();
+	if(_fishNets->isVisible())
+	{
+		return _fishNets->getCollisionArea();
+	}
+	return CCRectZero;
 }

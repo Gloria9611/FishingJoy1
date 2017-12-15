@@ -58,3 +58,20 @@ int Fish::getSpeed(void)
 {
 	return 200;
 }
+
+CCRect Fish::getCollisionArea()
+{
+
+		CCSize size = _fishSprite->getContentSize();
+	CCPoint pos = getParent()->convertToWorldSpace(getPosition());
+	return CCRect(pos.x - size.width / 2, pos.y - size.height/2, size.width, size.height);
+}
+
+
+void Fish::beCaught_CallFunc()
+{
+	if(isRunning())
+	{
+		getParent()->removeChild(this,false);
+	}
+}

@@ -12,8 +12,10 @@ public:
 	virtual ~FishNet(void);
 	CREATE_FUNC(FishNet);
 	bool init();
-
+	void showAt(CCPoint pos,int type= 0);
+	CCRect getCollisionArea();
 protected:
 	float getSpeed(int type);
 	CCSprite* _fishNetSprite;
+	
 };

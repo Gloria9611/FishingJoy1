@@ -27,6 +27,7 @@ bool GameScene::init()
 		_touchLayer = TouchLayer::create();
 		CC_BREAK_IF(!_touchLayer);
 		this->addChild(_touchLayer);
+		this->scheduleUpdate();
 		return true;
 	} while (0);
 	return false;
@@ -86,3 +87,73 @@ void GameScene::cannonShootTo(CCPoint target)
 {
 	_cannonLayer->shootTo(target);
 }
+
+bool GameScene::checkOutCollisionBetweenFishesAndBullet(Bullet *_bullet){
+	CCPoint bulletPos = _bullet->getCollosionPoint();
+	CCArray* fishArray = _fishLayer->getFishArray();
+	CCObject* obj = NULL;
+	CCARRAY_FOREACH(fishArray, obj)
+	{
+		Fish* _fish =(Fish*)obj;
+		if(_fish->isRunning() && _fish->getCollisionArea().containsPoint(bulletPos))
+		{
+			_bullet->end();
+			return true;
+		}
+	}
+	return false;
+
+}
+void GameScene::checkOutCollision(){
+
+	CCArray* bullets = _cannonLayer->getWeapon()->getBullets();
+	CCObject* obj = NULL;
+	CCARRAY_FOREACH(bullets, obj)
+	{
+		Bullet* _bullet = (Bullet*)obj;
+		if(_bullet->isVisible())
+		{
+			if(checkOutCollisionBetweenFishesAndBullet(_bullet))
+			{
+				checkOutCollisionBetweenFishesAndFishingNet(_bullet);
+			}
+		}
+	}	
+}
+
+
+
+void GameScene::update(float delta){
+	checkOutCollision();
+}
+
+void GameScene::fishWillBeCaught(Fish* _fish)
+{
+	float weaponPercents[k_Cannon_Count] = { 0.3, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1 };
+	float fishPercents[	k_Fish_Type_Count] = { 1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4 };
+	int cannonType = _cannonLayer->getWeapon()->getCannonType();
+	int fishType = _fish->getType();
+	if(CCRANDOM_0_1() < 1.1)
+	{
+		_fish->beCaught();
+	}
+}
+
+
+void GameScene::checkOutCollisionBetweenFishesAndFishingNet(Bullet* _bullet)
+{
+	Weapon* weapon = _cannonLayer->getWeapon();
+	CCRect rect = weapon->getCollisionArea(_bullet);
+	CCArray* fishArray = _fishLayer->getFishArray();
+	CCObject* obj = NULL;
+	CCARRAY_FOREACH(fishArray, obj)
+	{
+		Fish* _fish = (Fish*)obj;
+		if(_fish->isRunning() && rect.intersectsRect(_fish->getCollisionArea()))
+		{
+			fishWillBeCaught(_fish);
+		}
+	}
+}
+
+

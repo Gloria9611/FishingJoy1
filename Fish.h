@@ -37,7 +37,11 @@ public:
 	int getSpeed();
 	CC_SYNTHESIZE(FishType, _type, Type);
 	virtual ~Fish(void);
+	CCRect getCollisionArea();
+	void beCaught();
 protected:
 	CCSprite* _fishSprite;
+	void beCaught_CallFunc();
+
 };
 
