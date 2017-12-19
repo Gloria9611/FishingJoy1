@@ -5,7 +5,8 @@
 #include "MenuLayer.h"
 #include "CannonLayer.h"
 #include "TouchLayer.h"
-#include "Fish.h"
+//#include "Fish.h"
+#include "PaneLayer.h"
 USING_NS_CC;
 
 class GameScene :
@@ -24,6 +25,7 @@ protected:
 	MenuLayer* _menuLayer;
 	CannonLayer* _cannonLayer;
 	TouchLayer* _touchLayer;
+	PaneLayer *_paneLayer;
 	void preloadResources(void);
 	bool checkOutCollisionBetweenFishesAndBullet(Bullet *_bullet);
 	void checkOutCollisionBetweenFishesAndFishingNet(Bullet *_bullet);
