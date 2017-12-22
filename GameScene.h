@@ -19,6 +19,8 @@ public:
 	virtual ~GameScene();
 	void cannonAimAt(CCPoint target);
 	void cannonShootTo(CCPoint target);
+	void alterGold(int delta);
+	void onEnter();
 protected:
 	BackgroundLayer* _backgroundLayer;
 	FishLayer* _fishLayer;
@@ -32,5 +34,6 @@ protected:
 	void checkOutCollision();
 	virtual void update(float delta);
 	void fishWillBeCaught(Fish* _fish);
+	//void alterGold(int delta);
 };
 
