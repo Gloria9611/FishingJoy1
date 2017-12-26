@@ -1,13 +1,10 @@
-
-
-
-#if !defined(_STATICDATA_H)
+#ifndef _STATICDATA_H
 #define _STATICDATA_H
 
 #include<string>
 #include "cocos2d.h"
 using namespace std;
-USING_NS_CC;
+//USING_NS_CC;
 
 #define STATIC_DATA_FILENAME "static_data.plist"
 #define STATIC_DATA_STRING(key) StaticData::sharedStaticData()->stringValueFromKey(key)
@@ -20,24 +17,28 @@ USING_NS_CC;
 
 
 class StaticData:
-	public CCObject {
+	public cocos2d::CCObject {
 public:
+
 	static StaticData* sharedStaticData();
-	static void purge();
-	int intValueFromKey(const string& key);
 	const char* stringValueFromKey(const string& key);
-	float floatValueFromKey(const string& key);
-	bool booleanFromKey(const string& key);
-	CCPoint pointFromKey(const string& key);
-	CCRect rectFromKey(const string& key);
-	CCSize sizeFromKey(const string& key);
+	void purge();
+	int intValueFromKey(string& key);
+	StaticData *getInstance();
+	float floatValueFromKey(string& key);
+	bool booleanFromKey(string& key);
+	cocos2d::CCPoint pointFromKey(const string& key);
+	cocos2d::CCRect rectFromKey(const string& key);
+	cocos2d::CCSize sizeFromKey(const string& key);
+	//CC_SYNTHESIZE_READONLY(std::string, _staticDataPath, StaticDataPath);
 protected:
-	CCDictionary* _dictionary;
-	string _staticFileName;
-	bool init();
+	cocos2d::CCDictionary* _dictionary;
+	//string _staticFileName;
+	
 private:
 	~StaticData();
 	StaticData();
+	bool init();
 };
 
 #endif  //_STATICDATA_H

@@ -10,15 +10,15 @@ class FishLayer :
 	public CCLayer
 {
 public:
-	FishLayer(void);
+	FishLayer();
 	CREATE_FUNC(FishLayer)
 	virtual bool init();
 	virtual ~FishLayer(void);
 	CC_SYNTHESIZE_READONLY(CCArray*,_fishes,Fishes)
-	/*CCArray* getFishes()
+	CCArray* getFishes()
 	{
 		return _fishes;
-	}*/
+	}
 protected:
 	//CCArray* _fishes;
 	void addFish(float delta);

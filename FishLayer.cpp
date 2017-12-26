@@ -2,6 +2,8 @@
 #include "Fish.h"
 #include <ctime>
 
+#define k_Direction_Count 2
+#define k_Direction_Left 0
 FishLayer::FishLayer(void)
 {
 }
@@ -56,18 +58,22 @@ void FishLayer::addFish(float delta)
 
 FishLayer::~FishLayer(void)
 {
+	 CC_SAFE_RELEASE(_fishes);
 }
-CCArray* FishLayer::getFishes()
+/*CCArray* FishLayer::getFishes()
 {
 	return _fishes;
-}
+}*/
 
 
 void FishLayer::resetFish(Fish* fish){
-	int direction=CCRANDOM_0_1()*k_Direction_Count;
+	fish->reset();
+	//CCPoint start,desitination,fishPosition;
+	
 	float startX,startY,endX,endY;
 	CCSize winSize=CCDirector::sharedDirector()->getWinSize();
 	CCSize fishSize=fish->getSize();
+	int direction=CCRANDOM_0_1()*k_Direction_Count;
 	if(direction==k_Direction_Left)
 	{
 		startX=winSize.width+fishSize.width/2;
@@ -84,6 +90,7 @@ void FishLayer::resetFish(Fish* fish){
 
 	startY=CCRANDOM_0_1()*(winSize.height-fishSize.height)+fishSize.height/2;
 	addChild(fish);
+	//start= CCPointMake(startX,startY);
 	fish->setPosition(ccp(startX,startY));
 	fish->moveTo(ccp(endX,endY));
 }
