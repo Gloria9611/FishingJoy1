@@ -3,10 +3,10 @@
 
 #include "cocos2d.h"
 USING_NS_CC;
-class FishJoyData:public cocos2d::CCObject{
+class FishingJoyData:public cocos2d::CCObject{
 public :
-	//static FishJoyData* sharedFishJoyData();
-	static FishJoyData* getInstance();
+	static FishingJoyData* sharedFishJoyData();
+	static FishingJoyData* getInstance();
 	static void destoryInstance();
 	void reset();
 
@@ -18,10 +18,11 @@ public :
 	CC_SYNTHESIZE(bool,_isSound,IsSound)
 
 	void alterGold(int golds);
-	//void purge();
+	void purge();
 
 protected:
-
+	 FishingJoyData();
+    ~FishingJoyData();
 	bool init();
 };
 #endif

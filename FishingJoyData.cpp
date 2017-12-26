@@ -1,6 +1,5 @@
 //#include "cocos2d.h"
 #include "FishingJoyData.h"
-
 #include "StaticData.h"
 USING_NS_CC;
 
@@ -8,26 +7,40 @@ USING_NS_CC;
 #define MUSIC "music"
 #define SOUND "sound"
 #define GOLD "gold"
-
-static FishJoyData* _sharedFishJoyData=NULL;
-
-FishJoyData* FishJoyData::getInstance()
+FishingJoyData::FishingJoyData()
 {
-	if(NULL==_sharedFishJoyData)
+    
+}
+FishingJoyData::~FishingJoyData()
+{
+    this->flush();
+}
+static FishingJoyData* _sharedFishJoyData=NULL;
+void FishingJoyData::purge(){
+	CC_SAFE_RELEASE_NULL (_sharedFishJoyData);
+}
+
+
+
+
+
+FishingJoyData* FishingJoyData::getInstance()
+{
+	if(_sharedFishJoyData=NULL)
 	{
-		_sharedFishJoyData=new FishJoyData;
+		_sharedFishJoyData=new FishingJoyData;
 		_sharedFishJoyData->init();
 	}
 	return _sharedFishJoyData;
 }
 
 
-void FishJoyData::destoryInstance()
+void FishingJoyData::destoryInstance()
 {
 	CC_SAFE_DELETE(_sharedFishJoyData);
 }
 
-bool FishJoyData::init()
+bool FishingJoyData::init()
 {
 	//先判断是否第一次用
 	_isBeginer=CCUserDefault::sharedUserDefault()->getBoolForKey(IS_BEGINER,true);
@@ -50,7 +63,7 @@ bool FishJoyData::init()
 	return true;
 }
 
-void FishJoyData::reset()
+void FishingJoyData::reset()
 {
 	this->setIsMusic(true);
 	this->setIsSound(true);
@@ -59,17 +72,18 @@ void FishJoyData::reset()
 }
 
 
-void FishJoyData::flush(){
+void FishingJoyData::flush(){
 
 	CCUserDefault *userDefault=CCUserDefault::sharedUserDefault();
-	userDefault->setBoolForkey(IS_BEGINER,getIsBeginer());
+	//userDefault->setBoolForkey(IS_BEGINER,getIsBeginer());
+	CCUserDefault::sharedUserDefault()->setBoolForKey(IS_BEGINER,getIsBeginer());
 	userDefault->setIntegerForKey(GOLD,getGold());
 	userDefault->setBoolForKey(MUSIC,getIsMusic());
 	userDefault->setBoolForKey(SOUND,getIsSound());
 	userDefault->flush();
 }
 
-void FishJoyData::alterGold(int golds)
+void FishingJoyData::alterGold(int golds)
 {
 
 	int num=getGold();
