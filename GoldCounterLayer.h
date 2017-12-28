@@ -4,10 +4,10 @@
 USING_NS_CC;
 class GoldCounterLayer:public CCNode
 {
-public :static GoldCounterLayer* create(int number);
+public :static GoldCounterLayer* create(int number=0);
 		void setNumber(int number,int ceiling=9999999);
 protected:
-	bool init(int number);
+	bool init(int number=0);
 	int _number;
 private:
 
