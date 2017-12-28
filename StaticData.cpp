@@ -1,6 +1,4 @@
 
-
-
 #include "StaticData.h"
 
 static StaticData* g_sharedStaticData = NULL;

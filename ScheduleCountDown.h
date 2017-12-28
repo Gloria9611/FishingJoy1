@@ -12,10 +12,11 @@ public :
 	CC_SYNTHESIZE(int,_maxTime,MaxTime)
 	CC_SYNTHESIZE(bool,_loop,Loop)
 	CC_SYNTHESIZE(ScheduleCounterDelegate*,_target,Target)
+	void schedulePerSecond(float delta);
 
 protected:
 	bool init(ScheduleCounterDelegate* target,int perimeter,bool loop);
-	void schedulePerSecond(float delta);
+	
 
 private:
 };

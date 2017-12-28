@@ -1,5 +1,5 @@
 #include "ScheduleCountDown.h"
-
+USING_NS_CC;
 ScheduleCountDown *ScheduleCountDown::create(ScheduleCounterDelegate* target,int perimeter,bool loop)
 {
 ScheduleCountDown* countDown=new ScheduleCountDown;

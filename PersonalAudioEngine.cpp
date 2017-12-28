@@ -1,8 +1,8 @@
 #include "PersonalAudioEngine.h"
 #include "FishingJoyData.h"
-
+USING_NS_CC;
 static PersonalAudioEngine *_sharedEngine=NULL;
-PersonalAudioEngine *PersonalAudioEngine::sharedEngine()
+PersonalAudioEngine *PersonalAudioEngine::getInstance()
 {
 	if(_sharedEngine==NULL){
 		_sharedEngine=new PersonalAudioEngine;
@@ -20,6 +20,10 @@ void PersonalAudioEngine::destoryIntance()
 }
 
 PersonalAudioEngine::PersonalAudioEngine()
+{
+
+}
+PersonalAudioEngine::~PersonalAudioEngine()
 {
 
 }

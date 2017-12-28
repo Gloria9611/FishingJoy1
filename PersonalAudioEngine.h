@@ -1,12 +1,12 @@
 #ifndef PERSONALAUDIOENGINE_H
 #define PERSONALAUDIOENGINE_H
 #include "SimpleAudioEngine.h"
-#include "cocos2d.h"
+//#include "cocos2d.h"
 //using namespace cocos2d;
 
 
 typedef enum{
-	kEffectSwichCannon=0;
+	kEffectSwichCannon=0,
 	kEffectShoot,
 		kEffectFishNet,
 		kEffectCoins
@@ -19,13 +19,14 @@ public :
 	static void destoryIntance();
 	void playBackgroundMusic(int type);
 	void playEffect(EffectType type);
-	PersonalAudioEngine* sharedEngine();
+	//PersonalAudioEngine* sharedEngine();
 protected:
 	bool init();
 	PersonalAudioEngine();
+	~PersonalAudioEngine();
 	PersonalAudioEngine(const PersonalAudioEngine& engine);
 private:
-}
+
 
 };
 #endif

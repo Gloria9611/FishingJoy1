@@ -21,8 +21,8 @@ bool Bullet::init()
 	}
 	CCString* fileName = CCString::createWithFormat("weapon_bullet_%03d.png", 1);
 	_bulletSprite = CCSprite::createWithSpriteFrameName(fileName->getCString());
-	_bulletSprite->setAnchorPoint(ccp(0.5, 1));
-	addChild(_bulletSprite);
+	_bulletSprite->setAnchorPoint(ccp(0.5, 1/*0.18*/));
+	/*this->*/addChild(_bulletSprite);
 	return true;
 }
 
