@@ -7,15 +7,17 @@ USING_NS_CC;
 #define MUSIC "music"
 #define SOUND "sound"
 #define GOLD "gold"
-FishingJoyData::FishingJoyData()
+FishingJoyData::FishingJoyData(/*void*/)
 {
     
 }
-FishingJoyData::~FishingJoyData()
+FishingJoyData::~FishingJoyData(/*void*/)
 {
-    this->flush();
+    /*this->flush();maybe not*/
 }
 static FishingJoyData* _sharedFishJoyData=NULL;
+
+
 void FishingJoyData::purge(){
 	CC_SAFE_RELEASE_NULL (_sharedFishJoyData);
 }
@@ -26,7 +28,7 @@ void FishingJoyData::purge(){
 
 FishingJoyData* FishingJoyData::getInstance()
 {
-	if(_sharedFishJoyData=NULL)
+	if(_sharedFishJoyData==NULL)
 	{
 		_sharedFishJoyData=new FishingJoyData;
 		_sharedFishJoyData->init();

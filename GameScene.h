@@ -5,8 +5,11 @@
 #include "MenuLayer.h"
 #include "CannonLayer.h"
 #include "TouchLayer.h"
-//#include "Fish.h"
+#include "Fish.h"
 #include "PaneLayer.h"
+#include "FishingJoyData.h"
+#include "GoldCounterLayer.h"
+#include "PersonalAudioEngine.h"
 USING_NS_CC;
 
 class GameScene :
