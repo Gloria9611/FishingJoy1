@@ -13,7 +13,7 @@ FishingJoyData::FishingJoyData(/*void*/)
 }
 FishingJoyData::~FishingJoyData(/*void*/)
 {
-    /*this->flush();maybe not*/
+   /* this->flush();maybe not*/
 }
 static FishingJoyData* _sharedFishJoyData=NULL;
 
@@ -28,7 +28,7 @@ void FishingJoyData::purge(){
 
 FishingJoyData* FishingJoyData::getInstance()
 {
-	if(_sharedFishJoyData==NULL)
+	if(NULL==_sharedFishJoyData)
 	{
 		_sharedFishJoyData=new FishingJoyData;
 		_sharedFishJoyData->init();
