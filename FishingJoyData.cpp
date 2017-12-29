@@ -1,95 +1,81 @@
-//#include "cocos2d.h"
 #include "FishingJoyData.h"
-#include "StaticData.h"
+
 USING_NS_CC;
 
-#define IS_BEGINER "isBeginer"
-#define MUSIC "music"
-#define SOUND "sound"
-#define GOLD "gold"
-FishingJoyData::FishingJoyData(/*void*/)
+#define IS_BEGINER "_isBeginer"
+#define MUSIC "_music"
+#define SOUND "_sound"
+#define GOLD "_gold"
+
+static FishingJoyData* _sharedFishingJoyData = NULL;
+
+FishingJoyData::FishingJoyData(void)
 {
-    
 }
-FishingJoyData::~FishingJoyData(/*void*/)
+
+
+FishingJoyData::~FishingJoyData(void)
 {
-   /* this->flush();maybe not*/
+	this->flush();
 }
-static FishingJoyData* _sharedFishJoyData=NULL;
-
-
-void FishingJoyData::purge(){
-	CC_SAFE_RELEASE_NULL (_sharedFishJoyData);
-}
-
-
-
-
 
 FishingJoyData* FishingJoyData::getInstance()
 {
-	if(NULL==_sharedFishJoyData)
+	if(NULL == _sharedFishingJoyData)
 	{
-		_sharedFishJoyData=new FishingJoyData;
-		_sharedFishJoyData->init();
+		_sharedFishingJoyData = new FishingJoyData();
+		_sharedFishingJoyData -> init();
 	}
-	return _sharedFishJoyData;
-}
-
-
-void FishingJoyData::destoryInstance()
-{
-	CC_SAFE_DELETE(_sharedFishJoyData);
+	return _sharedFishingJoyData;
 }
 
 bool FishingJoyData::init()
 {
-	//先判断是否第一次用
-	_isBeginer=CCUserDefault::sharedUserDefault()->getBoolForKey(IS_BEGINER,true);
-	if(_isBeginer){
-		//当前XML文件为空。里面是没有数据的，设置初始的数据并保存到XML文件中
-	reset();
-	flush();
-	
+	_isBeginer = CCUserDefault::sharedUserDefault()->getBoolForKey(IS_BEGINER, true);
+	if (_isBeginer)
+	{
+		this -> reset();
 	}
-
-	else{
-		CCUserDefault *userDefault=CCUserDefault::sharedUserDefault();
-		//setIsBeginer(userDefault->getBoolForKey(IS_BEGINER));
-		setIsMusic(userDefault->getBoolForKey(MUSIC));
-		setIsSound(userDefault->getBoolForKey(SOUND));
-		setGold(userDefault->getIntegerForKey(GOLD));
-	
+	else
+	{
+		CCUserDefault* userDefault = CCUserDefault::sharedUserDefault();
+		this -> setGold(userDefault -> getIntegerForKey(GOLD));
+		this -> setMusic(userDefault -> getBoolForKey(MUSIC, true));
+		this -> setSound(userDefault -> getBoolForKey(SOUND, true));
 	}
-
 	return true;
 }
 
 void FishingJoyData::reset()
 {
-	this->setIsMusic(true);
-	this->setIsSound(true);
-	this->setGold(200);
-	this->setIsBeginer(false);
+	this -> setMusic(true);
+	this -> setSound(true);
+	this -> setGold(400);
+	this -> setIsBeginer(false);
+	this -> flush();
 }
 
+void FishingJoyData::flush()
+{
+	CCUserDefault* userDefault = CCUserDefault::sharedUserDefault();
+	
+	userDefault -> setBoolForKey(IS_BEGINER, _isBeginer);
+	userDefault -> setIntegerForKey(GOLD, _gold);
+	userDefault -> getBoolForKey(MUSIC, _music);
+	userDefault -> getBoolForKey(SOUND, _sound);
 
-void FishingJoyData::flush(){
-
-	CCUserDefault *userDefault=CCUserDefault::sharedUserDefault();
-	//userDefault->setBoolForkey(IS_BEGINER,getIsBeginer());
-	CCUserDefault::sharedUserDefault()->setBoolForKey(IS_BEGINER,getIsBeginer());
-	userDefault->setIntegerForKey(GOLD,getGold());
-	userDefault->setBoolForKey(MUSIC,getIsMusic());
-	userDefault->setBoolForKey(SOUND,getIsSound());
-	userDefault->flush();
+	userDefault -> flush();
 }
 
 void FishingJoyData::alterGold(int golds)
 {
-
-	int num=getGold();
-	num+=golds;
-	setGold(num);
+	int num = getGold();
+	num += golds;
+	this->setGold(num);
 	flush();
+}
+
+void FishingJoyData::purge()
+{
+	CC_SAFE_RELEASE_NULL(_sharedFishingJoyData);
 }

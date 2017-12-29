@@ -1,28 +1,32 @@
-#ifndef _FISH_JOY_DATA_H_
-#define _FISH_JOY_DATA_H_
-
+#pragma once
 #include "cocos2d.h"
-USING_NS_CC;
-class FishingJoyData:public cocos2d::CCObject{
-public :
-	static FishingJoyData* sharedFishJoyData();
+
+
+
+class FishingJoyData :
+	public cocos2d::CCObject
+{
+public:
 	static FishingJoyData* getInstance();
-	static void destoryInstance();
+
+	FishingJoyData();
+	~FishingJoyData();
+
 	void reset();
 
-	//将内存中的数值保存到文件中
 	void flush();
-	CC_SYNTHESIZE(bool,_isBeginer,IsBeginer)
-    CC_SYNTHESIZE(int,_gold,Gold)
-	CC_SYNTHESIZE(bool,_isMusic,IsMusic)
-	CC_SYNTHESIZE(bool,_isSound,IsSound)
+	
+	CC_SYNTHESIZE(int, _gold, Gold);
+	CC_SYNTHESIZE(bool, _isBeginer, IsBeginer);
+	CC_SYNTHESIZE(bool, _music, Music);
+	CC_SYNTHESIZE(bool, _sound, Sound);
 
 	void alterGold(int golds);
+
 	void purge();
 
 protected:
-	 FishingJoyData();
-    ~FishingJoyData();
 	bool init();
+
 };
-#endif
+
