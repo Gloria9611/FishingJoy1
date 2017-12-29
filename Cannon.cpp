@@ -13,15 +13,15 @@ Cannon::~Cannon(void)
 
 Cannon* Cannon::create(CannonType type)
 {
-	Cannon* _cannon = new Cannon();
-	if(_cannon && _cannon->init(type))
+	Cannon* cannon = new Cannon();
+	if(cannon && cannon->init(type))
 	{
-		_cannon->autorelease();
-		return _cannon;
+		cannon->autorelease();
+		return cannon;
 	}
 	else
 	{
-		CC_SAFE_DELETE(_cannon);
+		CC_SAFE_DELETE(cannon);
 		return NULL;
 	}
 }
@@ -40,7 +40,7 @@ bool Cannon::init(CannonType type)
 		cannonSprite->setAnchorPoint(ccp(0.5,0.18));
 	}
 	CC_SAFE_RETAIN(_cannonSprites);
-	setType(type);
+	this->setType(type);
 	return true;
 }
 
@@ -58,13 +58,14 @@ void Cannon::setType(CannonType var)
 	if(var < k_Cannon_Type_1)
 	{
 		var = (CannonType)(k_Cannon_Count-1);
-	}else if(var >= k_Cannon_Count)
+	}
+	else if(var >= k_Cannon_Count)
 	{
 		var = k_Cannon_Type_1;
 	}
-	removeChildByTag(_type);
-	CCSprite* sprite = (CCSprite*) _cannonSprites->objectAtIndex(var);
-	addChild(sprite,0,var);
+	this->removeChildByTag(_type);
+	CCSprite* sprite = (CCSprite*)_cannonSprites->objectAtIndex(var);
+	this->addChild(sprite,0,var);
 	_type = var;
 }
 
@@ -78,21 +79,15 @@ float Cannon::getFireRange()
 	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 	double temp = pow(winSize.width/2, 2) + pow(winSize.height, 2);
 	double result = sqrt(temp);
-	return result/7*(_type+1)/*+500*/;
+	return result/7*(_type+1);
 }
 
 void Cannon::aimAt(CCPoint target)
 {
-	/*if(target.y < 0)
-	{
-		target.y = 0.0f;
-	}*/
-	CCPoint location =this-> getParent()->convertToWorldSpace(getPosition());
+	CCPoint location = getParent()->convertToWorldSpace(getPosition());
 	float angle = ccpAngleSigned(ccpSub(target, location), CCPointMake(0, 1));
-	/*	if(abs(angle)>(3.14/2))
-	{
-		angle=angle>0?(3.14/2):-(3.14/2);
+	if(abs(angle) > (3.14/2)){
+	angle =angle > 0 ? (3.14/2) : -(3.14/2);
 	}
-	*/
 	this->setRotation(CC_RADIANS_TO_DEGREES(angle));
 }
