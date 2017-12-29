@@ -1,23 +1,23 @@
-#ifndef _SCHEDULECOUNTDOWN_H
-#define _SCHEDULECOUNTDOWN_H
+#pragma once
 #include "cocos2d.h"
 #include "ScheduleCounterDelegate.h"
+
 USING_NS_CC;
 
-class ScheduleCountDown:public CCNode
+class ScheduleCountDown :
+	public CCNode
 {
-public :
-	static ScheduleCountDown* create(ScheduleCounterDelegate* target,int perimeter,bool loop);
-	CC_SYNTHESIZE(int,_currentTime,CurrentTime)
-	CC_SYNTHESIZE(int,_maxTime,MaxTime)
-	CC_SYNTHESIZE(bool,_loop,Loop)
-	CC_SYNTHESIZE(ScheduleCounterDelegate*,_target,Target)
-	void schedulePerSecond(float delta);
+public:
+	static ScheduleCountDown* create(ScheduleCounterDelegate* target, int perimeter = 60, bool loop = true);
+
+	bool init (ScheduleCounterDelegate* target, int perimeter = 60, bool loop = true);
+
+	CC_SYNTHESIZE(bool, _loop, Loop);
 
 protected:
-	bool init(ScheduleCounterDelegate* target,int perimeter,bool loop);
-	
-
-private:
+	ScheduleCounterDelegate* _target;
+	int _currTime;
+	int _maxTime;
+	void schedulePerSecond(float delta);
 };
-#endif
+

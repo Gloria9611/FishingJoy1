@@ -1,32 +1,19 @@
-#ifndef PERSONALAUDIOENGINE_H
-#define PERSONALAUDIOENGINE_H
+#pragma once
+#include "cocos2d.h"
 #include "SimpleAudioEngine.h"
-//#include "cocos2d.h"
-//using namespace cocos2d;
+
+USING_NS_CC;
+using namespace CocosDenshion;
 
 
-typedef enum{
-	kEffectSwichCannon=0,
-	kEffectShoot,
-		kEffectFishNet,
-		kEffectCoins
-}EffectType;
-
-class PersonalAudioEngine:public CocosDenshion::SimpleAudioEngine
+class PersonalAudioEngine :
+	public SimpleAudioEngine
 {
-public :
-	static PersonalAudioEngine *getInstance();
-	static void destoryIntance();
-	void playBackgroundMusic(int type);
-	void playEffect(EffectType type);
-	//PersonalAudioEngine* sharedEngine();
-protected:
+public:
+	PersonalAudioEngine(void);
+	~PersonalAudioEngine(void);
+	static PersonalAudioEngine* sharedEngine();
+	
 	bool init();
-	PersonalAudioEngine();
-	~PersonalAudioEngine();
-	PersonalAudioEngine(const PersonalAudioEngine& engine);
-private:
-
-
+	void setBackgroundMusic(bool flag);
 };
-#endif

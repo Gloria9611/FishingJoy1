@@ -1,49 +1,38 @@
 #include "ScheduleCountDown.h"
-USING_NS_CC;
-ScheduleCountDown *ScheduleCountDown::create(ScheduleCounterDelegate* target,int perimeter,bool loop)
-{
-ScheduleCountDown* countDown=new ScheduleCountDown;
-if(countDown && countDown->init(target,perimeter,loop))
-{
-	countDown->autorelease();
-	return countDown;
 
-}
-CC_SAFE_DELETE(countDown);
-return NULL;
+ScheduleCountDown* ScheduleCountDown::create(ScheduleCounterDelegate* target, int perimeter, bool loop)
+{
+	ScheduleCountDown* counter = new ScheduleCountDown();
+	counter->init(target, perimeter, loop);
+	counter->autorelease();
+	return counter;
 }
 
-bool ScheduleCountDown::init(ScheduleCounterDelegate* target,int perimeter,bool loop)
+bool ScheduleCountDown::init(ScheduleCounterDelegate* target, int perimeter, bool loop)
 {
-	if(!CCNode::init()){
-		return false;
-	}
-	_target=target;
-	_maxTime=_currentTime=perimeter;
-	_loop=loop;
-
-	schedule(schedule_selector(ScheduleCountDown::schedulePerSecond),1.0f);
+	_target = target;
+	_maxTime = perimeter;
+	_currTime = perimeter;
+	_loop = loop;
+	
+	this->schedule(schedule_selector(ScheduleCountDown::schedulePerSecond), 1.0f);
 	return true;
 }
 
+
 void ScheduleCountDown::schedulePerSecond(float delta)
 {
-	_currentTime--;
-	if(_currentTime<0){
-		_target->scheduleTimeUp();
-		if(_loop==true)
-		{
+	_currTime--;
 
-			_currentTime=_maxTime;
-		}
+	if(_currTime <= 0){
+		bool isLoop = this->getLoop();
 
-		else
-		{
+		if(isLoop){
+			_currTime = _maxTime;
+		}else{
 			this->unschedule(schedule_selector(ScheduleCountDown::schedulePerSecond));
-
 		}
-		return ;
-
+		_target->scheduleTimeUp();
 	}
-	_target->setScheduleNumber(_currentTime);
+	_target->setScheduleNumber(_currTime);
 }

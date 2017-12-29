@@ -6,11 +6,15 @@
 #include "CannonLayer.h"
 #include "TouchLayer.h"
 #include "Fish.h"
-#include "PaneLayer.h"
+#include "PanelLayer.h"
 #include "FishingJoyData.h"
-#include "GoldCounterLayer.h"
-#include "PersonalAudioEngine.h"
+
 USING_NS_CC;
+
+typedef enum{
+	k_Operate_Pause = 0,
+	k_Operate_Resume
+}OperateFlag;
 
 class GameScene :
 	public CCScene
@@ -22,21 +26,32 @@ public:
 	virtual ~GameScene();
 	void cannonAimAt(CCPoint target);
 	void cannonShootTo(CCPoint target);
-	void alterGold(int delta);
-	void onEnter();
+
+	void scheduleTimeUp();
+
+	void pause(CCObject *sender);
+	void resume();
+	void music();
+
+	void reset();
+
+	void mainMenu();
+
+	CC_SYNTHESIZE_READONLY(CCMenu*, _menu, Menu);
+
 protected:
 	BackgroundLayer* _backgroundLayer;
 	FishLayer* _fishLayer;
 	MenuLayer* _menuLayer;
 	CannonLayer* _cannonLayer;
 	TouchLayer* _touchLayer;
-	PaneLayer *_paneLayer;
-	void preloadResources(void);
-	bool checkOutCollisionBetweenFishesAndBullet(Bullet *_bullet);
-	void checkOutCollisionBetweenFishesAndFishingNet(Bullet *_bullet);
+	PanelLayer* _panelLayer;
+	CCSprite* _pauseSprite;
+	bool checkOutCollisionBetweenFishesAndBullet(Bullet* bullet);
 	void checkOutCollision();
 	virtual void update(float delta);
-	void fishWillBeCaught(Fish* _fish);
-	//void alterGold(int delta);
+	void fishWillBeCaught(Fish* fish);
+	void alterGold(int delta);
+	void checkOutCollisionBetweenFishesAndFishingNet(Bullet* bulet);
+	void operateAllSchedulerAndActions(CCNode* node, OperateFlag flag);
 };
-
