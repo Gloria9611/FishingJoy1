@@ -3,7 +3,7 @@
 #include "Cannon.h"
 #include "Bullet.h"
 #include "FishNet.h"
-#include "PersonalAudioEngine.h"
+
 USING_NS_CC;
 
 #define _WEAPON_H
@@ -19,16 +19,12 @@ public:
 	void changeCannon(CannonOperate operate);
 	~Weapon(void);
 	void aimAt(CCPoint target);
-	void shootTo(CCPoint target);
-	//void end(Bullet *bullet);
-	CCRect getCollisionArea(Bullet *bullet);
-	//float getPercent();
+	bool shootTo(CCPoint target);
+	CCRect getCollisionArea(Bullet* bullet);
 protected:
 	CC_SYNTHESIZE_READONLY(Cannon*, _cannon, Cannon);
 	CC_SYNTHESIZE_READONLY(CCArray*, _bullets, Bullets);
 	CC_SYNTHESIZE_READONLY(CCArray*, _fishNets, FishNets);
 	CC_SYNTHESIZE_READONLY(CCArray*, _particils, CCParticleSystemQuad);
 	Bullet* getBulletToShoot();
-	
-private:
 };
